@@ -1,10 +1,19 @@
 pipeline {
     agent any
+
+    tools {
+        sonarQubeScanner 'sonar-scanner'
+    }
+
     stages {
-        stage('Checkout') {
+
+        stage('SonarQube Analysis') {
             steps {
-                echo 'Repository successfully cloned from GitHub.'
+                withSonarQubeEnv('SonarQube') {
+                    sh 'sonar-scanner'
+                }
             }
         }
+
     }
 }
